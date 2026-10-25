@@ -1,0 +1,118 @@
+{
+  "schema_version": "0.1",
+  "stage": "component-prototype",
+  "items": [
+    {
+      "id": "ribbon-ring",
+      "name": "四瓣折带圆环",
+      "private_reference_id": "MAT-005",
+      "relations": [
+        "parallel",
+        "hub-and-spoke"
+      ],
+      "status": "tested-prototype",
+      "implemented_scope": "固定1个中心与4个并列方向，不表达时序；方向标签沿弧逐字排布。",
+      "capacity": "中心最多14字，方向最多10字，说明最多36字。推荐显式换行中心与说明。",
+      "generator": "scripts/components/index.mjs",
+      "example_input": "examples/samples.json",
+      "example_pages": [
+        1,
+        2
+      ],
+      "themes": [
+        "academic",
+        "teal"
+      ],
+      "canvas": [
+        1280,
+        720
+      ],
+      "verification": {
+        "powerpoint_render": "reviewed-six-slides",
+        "native_geometry": "verified",
+        "content": "verified",
+        "input_guards": "tested"
+      },
+      "limits": [
+        "仅支持固定节点数量",
+        "中文字符容量为保守启发式，仍需渲染验证",
+        "尚未实现截图复现与原稿局部修改"
+      ],
+      "publication_status": "reference-rights-and-runtime-review-required"
+    },
+    {
+      "id": "three-columns",
+      "name": "三列图文",
+      "private_reference_id": "MAT-006",
+      "relations": [
+        "parallel"
+      ],
+      "status": "tested-prototype",
+      "implemented_scope": "固定3列，每列3项举措；可插入本地照片或使用原生节点示意图。",
+      "capacity": "列标题最多9字，横条标题12字，每条举措14字。图片需来源与图注。",
+      "generator": "scripts/components/index.mjs",
+      "example_input": "examples/samples.json",
+      "example_pages": [
+        3,
+        4
+      ],
+      "themes": [
+        "academic",
+        "teal"
+      ],
+      "canvas": [
+        1280,
+        720
+      ],
+      "verification": {
+        "powerpoint_render": "reviewed-six-slides",
+        "native_geometry": "verified",
+        "content": "verified",
+        "input_guards": "tested"
+      },
+      "limits": [
+        "仅支持固定节点数量",
+        "中文字符容量为保守启发式，仍需渲染验证",
+        "尚未实现截图复现与原稿局部修改"
+      ],
+      "publication_status": "reference-rights-and-runtime-review-required"
+    },
+    {
+      "id": "tiered-pyramid",
+      "name": "三级梯形层级",
+      "private_reference_id": "MAT-007",
+      "relations": [
+        "hierarchy"
+      ],
+      "status": "tested-prototype",
+      "implemented_scope": "固定3级，上到下输入。必须有层级依据，不表示数值面积。",
+      "capacity": "层级标题最多14字，说明36字，关键词7字。",
+      "generator": "scripts/components/index.mjs",
+      "example_input": "examples/samples.json",
+      "example_pages": [
+        5,
+        6
+      ],
+      "themes": [
+        "academic",
+        "teal"
+      ],
+      "canvas": [
+        1280,
+        720
+      ],
+      "verification": {
+        "powerpoint_render": "reviewed-six-slides",
+        "native_geometry": "verified",
+        "content": "verified",
+        "input_guards": "tested"
+      },
+      "limits": [
+        "仅支持固定节点数量",
+        "中文字符容量为保守启发式，仍需渲染验证",
+        "尚未实现截图复现与原稿局部修改"
+      ],
+      "publication_status": "reference-rights-and-runtime-review-required"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import {validateSpec} from './components/index.mjs';
+const examples=JSON.parse(await fs.readFile(new URL('../examples/samples.json',import.meta.url),'utf8')).slides;
+for(const spec of examples)validateSpec(spec);
+const clone=i=>structuredClone(examples[i]);
+let bad=clone(0);bad.items.pop();assert.throws(()=>validateSpec(bad),/exactly 4/);
+bad=clone(0);bad.items[0].label='过长的学科名称会挤出圆环范围';assert.throws(()=>validateSpec(bad),/exceeds capacity/);
+bad=clone(2);bad.columns[0].bullets.push('额外条目');assert.throws(()=>validateSpec(bad),/3 bullets/);
+bad=clone(2);delete bad.columns[0].diagram;bad.columns[0].image={path:'some.jpg'};assert.throws(()=>validateSpec(bad),/image source/);
+bad=clone(4);bad.levels.pop();assert.throws(()=>validateSpec(bad),/3 levels/);
+bad=clone(0);bad.theme='unknown';assert.throws(()=>validateSpec(bad),/Unknown theme/);
+bad=clone(0);bad.center='';assert.throws(()=>validateSpec(bad),/nonempty/);
+console.log('PASS: 6 complete inputs and 7 invalid-input cases. Visual rendering is checked separately.');

@@ -1,0 +1,37 @@
+{
+  "id": "tiered-pyramid",
+  "name": "三级梯形层级",
+  "private_reference_id": "MAT-007",
+  "relations": [
+    "hierarchy"
+  ],
+  "status": "tested-prototype",
+  "implemented_scope": "固定3级，上到下输入。必须有层级依据，不表示数值面积。",
+  "capacity": "层级标题最多14字，说明36字，关键词7字。",
+  "generator": "scripts/components/index.mjs",
+  "example_input": "examples/samples.json",
+  "example_pages": [
+    5,
+    6
+  ],
+  "themes": [
+    "academic",
+    "teal"
+  ],
+  "canvas": [
+    1280,
+    720
+  ],
+  "verification": {
+    "powerpoint_render": "reviewed-six-slides",
+    "native_geometry": "verified",
+    "content": "verified",
+    "input_guards": "tested"
+  },
+  "limits": [
+    "仅支持固定节点数量",
+    "中文字符容量为保守启发式，仍需渲染验证",
+    "尚未实现完整Skill的自动选型与原稿局部修改"
+  ],
+  "publication_status": "reference-rights-and-runtime-review-required"
+}
