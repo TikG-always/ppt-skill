@@ -1,3 +1,4 @@
+import {validateTimeline,timelinePage} from './timeline.mjs';
 import fs from 'node:fs/promises';
 
 export const themes={
@@ -17,6 +18,7 @@ function base(s,t,spec,index){s.background.fill='#FFFFFF';text(s,t,'page.title',
 function reqString(v,key,max){if(typeof v!=='string'||!v.trim())throw Error(key+' must be nonempty text');if([...v.replace(/\s/g,'')].length>max)throw Error(key+' exceeds capacity '+max+' characters; revise or select another layout');}
 export function validateSpec(spec){
   reqString(spec.title,'title',26);if(spec.subtitle)reqString(spec.subtitle,'subtitle',50);
+  if(spec.type==='timeline-six'){validateTimeline(spec);return;}
   if(!themes[spec.theme||'academic'])throw Error('Unknown theme');
   if(spec.type==='ribbon-ring'){
     reqString(spec.center,'center',14);if(spec.centerNote)reqString(spec.centerNote,'centerNote',12);
@@ -42,4 +44,4 @@ export async function columnsPage(s,t,spec,index){base(s,t,spec,index);for(let i
   }}
 export function pyramidPage(s,t,spec,index){base(s,t,spec,index);let colors=[t.colors[3],t.colors[1],t.accent];for(let i=0;i<3;i++){let y=181+i*153,h=130,c=colors[i],left=221-i*62,right=379+i*62,bLeft=left-52,bRight=right+52;polygon(s,'tier.band-'+i,[[right,y],[1160+i*18,y],[1202+i*12,y+h],[bRight,y+h]],c);polygon(s,'tier.front-'+i,[[left,y],[right,y],[bRight,y+h],[bLeft,y+h]],shade(c,.82));polygon(s,'tier.fold-'+i,[[left,y],[left+30,y],[left+44,y+h],[bLeft,y+h]],shade(c,.84));text(s,t,'tier.number-'+i,String(i+1).padStart(2,'0'),left-25,y+34,right-left+50,66,40,'#FFFFFF','center');text(s,t,'tier.title-'+i,spec.levels[i].title,570,y+15,500,47,31,'#FFFFFF');text(s,t,'tier.body-'+i,spec.levels[i].body,570,y+66,600,51,22,'#FFFFFF','left',0,false);}
   spec.levels.forEach((o,i)=>text(s,t,'tier.key-'+i,o.keyword,1072,190+i*153,125,40,16,'#FFFFFF','center',0,false));}
-export async function buildSlide(p,spec,index){validateSpec(spec);let s=p.slides.add(),t=themes[spec.theme||'academic'];if(spec.type==='ribbon-ring')ringPage(s,t,spec,index);if(spec.type==='three-columns')await columnsPage(s,t,spec,index);if(spec.type==='tiered-pyramid')pyramidPage(s,t,spec,index);s.speakerNotes.text='本页为结构组件示例，非机构成果陈述。\n'+(spec.notes||'')+'\n'+(spec.columns||[]).filter(o=>o.image).map(o=>'图片：'+o.image.source+'；图注：'+o.caption).join('\n');return s;}
+export async function buildSlide(p,spec,index){validateSpec(spec);let s=p.slides.add(),t=themes[spec.theme||'academic'];if(spec.type==='timeline-six')timelinePage(s,spec,index,{rect,text});if(spec.type==='ribbon-ring')ringPage(s,t,spec,index);if(spec.type==='three-columns')await columnsPage(s,t,spec,index);if(spec.type==='tiered-pyramid')pyramidPage(s,t,spec,index);s.speakerNotes.text=(spec.notes||'')+'\n'+(spec.columns||[]).filter(o=>o.image).map(o=>'图片：'+o.image.source+'；图注：'+o.caption).join('\n');return s;}

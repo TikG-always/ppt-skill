@@ -113,6 +113,39 @@
         "尚未实现截图复现与原稿局部修改"
       ],
       "publication_status": "reference-rights-and-runtime-review-required"
+    },
+    {
+      "id": "timeline-six",
+      "name": "六节点双侧事件时间轴",
+      "private_reference_id": "MAT-020",
+      "relations": [
+        "sequence",
+        "timeline"
+      ],
+      "status": "tested-prototype",
+      "generator": "scripts/components/timeline.mjs",
+      "color_policy": "locked-reference-mat020",
+      "palette": [
+        "#002060",
+        "#0069B8",
+        "#C00000",
+        "#404040",
+        "#D9D9D9",
+        "#000000",
+        "#FFFFFF"
+      ],
+      "example_input": "examples/timeline-brief.json",
+      "limits": [
+        "固定六节点",
+        "截图平坦色取样，不等于原始Office主题",
+        "节点等距，不表示时长比例"
+      ],
+      "verification": {
+        "powerpoint_render": "reviewed-one-slide",
+        "native_geometry": "verified",
+        "content": "verified",
+        "reference_color_lock": "tested"
+      }
     }
   ]
 }

@@ -1,6 +1,6 @@
 interface:
   display_name: "可编辑PPT"
-  short_description: "理解文字逻辑，选择圆环、三列或梯形，生成并检查原生可编辑PPT"
+  short_description: "按内容逐页选择布局，区分结构借鉴与严格复现，生成可编辑学术PPT"
   default_prompt: "使用 $editable-ppt-skill 将我的文字制作成可编辑PPT，自动选择合适结构并检查版式。"
 policy:
   allow_implicit_invocation: true

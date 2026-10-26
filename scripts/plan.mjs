@@ -4,7 +4,7 @@ import {pathToFileURL} from 'node:url';
 import {validateSpec} from './components/index.mjs';
 
 const compact=v=>String(v??'').replace(/\s/g,'');
-function visible(spec){let out=[spec.title,spec.subtitle,spec.center,spec.centerNote];for(let i of spec.items||[])out.push(i.label,i.description);for(let c of spec.columns||[])out.push(c.heading,c.title,...c.bullets,c.caption,...(c.diagram||[]));for(let l of spec.levels||[])out.push(l.title,l.body,l.keyword);return out.filter(Boolean).map(compact).join('\n');}
+function visible(spec){let out=[spec.title,spec.subtitle,spec.center,spec.centerNote];for(let i of spec.items||[])out.push(i.label,i.description);for(let c of spec.columns||[])out.push(c.heading,c.title,...c.bullets,c.caption,...(c.diagram||[]));for(let l of spec.levels||[])out.push(l.title,l.body,l.keyword);for(let m of spec.milestones||[])out.push(m.label,m.top,m.bottom);return out.filter(Boolean).map(compact).join('\n');}
 export function plan(brief){
   if(brief?.mode!=='create')return {status:'unsupported',reason:'本版仅实现文字生成(create)，不实现截图复现或原稿局部修改。'};
   if(!Array.isArray(brief.slides)||!brief.slides.length)return {status:'needs-content',reason:'需要至少一页经过语义整理的内容。'};
@@ -18,10 +18,13 @@ export function plan(brief){
     let selected;
     if(b.relation==='parallel'&&groups.length===4&&typeof b.center==='string'&&b.center.trim())selected='ribbon-ring';
     if(b.relation==='parallel'&&groups.length===3)selected='three-columns';
+    if(['sequence','timeline'].includes(b.relation)&&groups.length===6)selected='timeline-six';
     if(b.relation==='hierarchy'&&groups.length===3)selected='tiered-pyramid';
     if(!selected)return {status:'unsupported',slide:i+1,reason:`现有组件不适配关系 ${b.relation} 与 ${groups.length} 个节点；不得删减节点或改变关系。`};
+    if(b.referenceId&&!(b.referenceId==='MAT-020'&&selected==='timeline-six'))return {status:'unsupported',slide:i+1,reason:'指定参考尚无保色原生适配；禁止回退到默认主题。'};
     if(b.requestedTemplate&&b.requestedTemplate!==selected)return {status:'conflict',slide:i+1,reason:`指定模板 ${b.requestedTemplate} 与内容适配结果 ${selected} 冲突。`};
-    let s={title:b.title,subtitle:b.subtitle,theme:b.theme||'academic',type:selected,notes:b.notes};
+    let s={title:b.title,subtitle:b.subtitle,theme:b.theme||(selected==='timeline-six'?'reference-mat020':'academic'),type:selected,notes:b.notes};
+    if(selected==='timeline-six')s.milestones=groups.map(g=>({label:g.label,top:g.top,bottom:g.bottom,emphasis:g.emphasis}));
     if(selected==='ribbon-ring'){s.center=b.center;s.centerNote=b.centerNote;s.items=groups.map(g=>({label:g.label,description:g.description}));}
     if(selected==='three-columns')s.columns=groups.map(g=>({heading:g.label,title:g.title,bullets:g.bullets,caption:g.caption,...(g.image?{image:g.image}:{diagram:g.diagram})}));
     if(selected==='tiered-pyramid')s.levels=groups.map(g=>({title:g.label,body:g.description,keyword:g.keyword}));

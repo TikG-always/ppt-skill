@@ -32,6 +32,13 @@ with zipfile.ZipFile(deck) as z:
                 assert texts[f'column.heading-{j}']==col['heading']
                 for k,item in enumerate(col['bullets']):
                     assert norm(texts[f'column.item-{j}-{k}'])==norm(item)
+        elif spec['type']=='timeline-six':
+            assert photos==0
+            assert 'timeline.axis' in texts
+            for j,m in enumerate(spec['milestones']):
+                assert texts[f'timeline.label-{j}']==m['label']
+                for key in ['top','bottom']:
+                    if m.get(key):assert norm(texts[f'timeline.event-{j}-{key}'])==norm(m[key])
         else:
             assert photos==0, 'Pyramid must not be rasterized'
             for j,level in enumerate(spec['levels']):

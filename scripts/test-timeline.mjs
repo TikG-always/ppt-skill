@@ -1,0 +1,14 @@
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {plan} from './plan.mjs';
+const b=JSON.parse(await fs.readFile(new URL('../examples/timeline-brief.json',import.meta.url),'utf8'));
+assert.equal(plan(b).deck.slides[0].theme,'reference-mat020');
+assert.equal(plan(b).decisions[0].selected,'timeline-six');
+const test=(change,status)=>{const c=structuredClone(b);change(c.slides[0]);assert.equal(plan(c).status,status);};
+test(s=>s.theme='teal','needs-content');
+test(s=>s.referenceId='MAT-015','unsupported');
+test(s=>s.groups.pop(),'unsupported');
+test(s=>s.groups[0].top='长'.repeat(29),'needs-content');
+test(s=>{delete s.groups[0].top;delete s.groups[0].bottom;},'needs-content');
+test(s=>s.protectedTerms=['不存在的事件'],'conflict');
+console.log('PASS timeline selection, reference color lock, unsupported reference, count, capacity, missing event and content protection');

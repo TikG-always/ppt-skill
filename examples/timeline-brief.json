@@ -1,0 +1,47 @@
+{
+  "mode": "create",
+  "slides": [
+    {
+      "title": "学术汇报制作流程",
+      "relation": "sequence",
+      "evidence": "材料解析先于内容规划，随后匹配模板与准备素材，再生成并检查，六个阶段有先后顺序。",
+      "requestedTemplate": "timeline-six",
+      "theme": "reference-mat020",
+      "notes": "演示内容为制作流程，非院校成果。布局参考私人库MAT-020；标题#002060，箭头#0069B8，重点#C00000来自截图平坦色区采样。保留六节点水平轴、上下事件框和颜色角色；按新主题省略学校标识。",
+      "groups": [
+        {
+          "label": "01",
+          "top": "理解材料\n提炼核心问题",
+          "bottom": "核对事实\n与证据范围",
+          "emphasis": "top"
+        },
+        {
+          "label": "02",
+          "top": "规划叙事\n组织逐页观点",
+          "bottom": "确定内容关系\n保留关键条件"
+        },
+        {
+          "label": "03",
+          "top": "匹配模板\n锁定配色与结构"
+        },
+        {
+          "label": "04",
+          "top": "组织素材\n复用适配组件",
+          "bottom": "检查图片\n与观点对应"
+        },
+        {
+          "label": "05",
+          "bottom": "生成可编辑页面\n保持同级样式",
+          "emphasis": "bottom"
+        },
+        {
+          "label": "06",
+          "top": "对照原模板\n检查视觉效果",
+          "bottom": "验证内容完整\n交付最终文件",
+          "emphasis": "top"
+        }
+      ],
+      "referenceId": "MAT-020"
+    }
+  ]
+}
